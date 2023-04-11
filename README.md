@@ -56,7 +56,9 @@ kubectl get services -o wide
 ```bash
 oc login
 oc new-project samples
-oc new-app nodejs~https://github.com/ibm/node-hello-world.git
+#oc new-app nodejs~https://github.com/ibm/node-hello-world.git
+oc new-app node~https://github.com/ibm/node-hello-world.git --strategy=docker
+oc expose deployment/node-hello-world --port 8080 
 oc expose svc/node-hello-world
 oc get routes
 ```
