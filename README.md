@@ -56,9 +56,14 @@ kubectl get services -o wide
 ```bash
 oc login
 oc new-project samples
+#oc project samples
 #oc new-app nodejs~https://github.com/ibm/node-hello-world.git
 oc new-app node~https://github.com/ibm/node-hello-world.git --strategy=docker
+oc new-app node~https://github.com/prgavali/node-hello-world.git#prgavali --strategy=docker
 oc expose deployment/node-hello-world --port 8080 
 oc expose svc/node-hello-world
 oc get routes
+oc get pod -n ibm-observe -o wide
+oc patch deployment node-hello-world -p '{"spec": {"template":{"metadata":{"annotations":{"prometheus.io/path":"/metrics","prometheus.io/port":"8080","prometheus.io/scrape":"true"}}}} }'
+
 ```
